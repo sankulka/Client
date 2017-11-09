@@ -1,0 +1,103 @@
+<script type="text/ng-template" id="patientUpdate.html">
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div ng-if="patient == null">
+			<h3 class="panel-title" id="modal-title">Create Patient</h3>
+		</div>
+		<div ng-if="patient != null">
+			<h3 class="panel-title" id="modal-title">Update Patient</h3>
+		</div>
+	</div>
+	<div class="panel-body" id="modal-body">
+		<form name="patientForm" role="form" class="form-horizontal" novalidate>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Salutation:</label>
+				<div class="col-md-2">
+					<select ng-model="salutation" class="form-control select"  ng-disabled="patient != null">
+						<option ng-repeat="sal in salutations">{{sal}}</option>
+					</select>
+				</div>
+			</div>	
+			<div class="form-group" ng-class="{'has-error' : patientForm.name.$invalid && !patientForm.name.$pristine}">
+				<label class="col-md-3 control-label">Name:</label>  
+				<div class="col-md-6">
+					<input type="text" ng-model="name" class="form-control" name="name"  ng-disabled="patient != null" required/>
+					<p ng-show="patientForm.name.$invalid && !patientForm.name.$pristine" class="help-block">Enter Patient name</p>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error' : patientForm.phone.$invalid && !patientForm.phone.$pristine}">
+				<label class="col-md-3 control-label">Phone:</label>          
+				<div class="col-md-6">
+					<input type="text" class="form-control" ng-model="phone" name="phone" ng-pattern="/^[0-9]+$/" required/>
+					<p ng-show="patientForm.phone.$invalid && !patientForm.phone.$pristine" class="help-block">Enter valid phone number</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Primary Complaint:</label>     
+				<div class="col-md-6">
+					<input type="text" class="form-control" ng-model="primaryCom" name="primaryCom"/>
+				</div>
+			</div>  		
+			<div class="form-group">
+				<label class="col-md-3 control-label">Secondary Complaint:</label>     
+				<div class="col-md-6">
+					<input type="text" class="form-control" ng-model="secondaryCom" name="secondaryCom"/>
+				</div>
+			</div>  			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Gender:</label>
+				<div class="form-group">
+					<div class="col-md-2">           
+						<label class="check"><input type="radio" ng-model="gender" value="Male"class="iradio" name="gender"  ng-disabled="patient != null"/> Male</label>
+					</div>
+					<div class="col-md-2">
+						<label class="check"><input type="radio" ng-model="gender" value="Female" class="iradio" name="gender" checked="checked"  ng-disabled="patient != null"/> Female</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Reference:</label>
+				<div class="col-md-4">
+					<select ng-model="reference" class="form-control tags" ng-disabled="patient != null">
+						<option ng-repeat="ref in references">{{ref}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">E-mail:</label>
+				<div class="col-md-6">
+					<input type="email" value="" ng-model="email" name="email" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Date of birth:</label>
+				
+				<div class="col-md-5">
+					<div class="input-group date">
+						<input type="text" id="n_release" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dob" show-button-bar="false" is-open="opened" datepicker-options="dateOptions" close-text="Close"/>
+						<span class="input-group-addon add-on" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Address:</label>     
+				<div class="col-md-6">
+					<input type="text" class="form-control" ng-model="address" name="address"/>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="panel-body clearfix">
+		<button class="btn btn-default pull-right" ng-click="ok()" ng-disabled="patientForm.name.$invalid || patientForm.phone.$invalid">Save</button>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$(".tags").select2({
+		tags: true,
+		tokenSeparators: [',', '\n']
+	});
+});
+</script>
+</script>

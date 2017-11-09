@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+	<div class="panel-heading">                                
+		<div class="row">
+			<h3 class="panel-title"><span class="fa fa-star"/> Testimonials</h3>
+		</div>
+	</div>
+	<div class="panel-body">
+		<uib-accordion close-others="false">
+			<div class="col-md-4" ng-repeat="testimonial in vm.testimonials">
+				<div uib-accordion-group class="panel panel-primary">
+					<uib-accordion-heading>
+						<h3 class="panel-title">{{testimonial.heading}}</h3>
+						<ul class="panel-controls" ng-show="vm.role == 'owner'">
+							<li class="xn-icon-button">
+								<a ng-click="deleteTestimonial(testimonial)">
+									<span class="fa fa-times"></span>
+								</a>
+							</li>
+						</ul>
+					</uib-accordion-heading>
+					<div>
+						<div ng-repeat="note in testimonial.notes">
+							{{note}}
+						</div>
+						<div ng-repeat="file in testimonial.fileInput.files">
+							<div class="gallery">
+								<a class="gallery-item" href="{{vm.path + file}}" target="_blank">
+									<div class="image"> 
+										<img src="{{vm.path + file}}"/>
+									</div>
+								</a>
+							</div>
+						</div>					
+					</div>  
+				</div>
+			</div>
+		</uib-accordion>
+	</div>
+</div>

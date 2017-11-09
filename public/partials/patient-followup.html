@@ -1,0 +1,158 @@
+<script type="text/ng-template" id="followup.html">
+<div class="panel panel-default">
+	<div id="patient-followup-controller">
+	<div class="panel-body">
+		<h3 class="panel-title" id="modal-title">Followup</h3>
+	</div>
+	<div class="panel-body" id="modal-body">
+		<form id="followupForm" role="form" class="form-horizontal">
+
+			<div class="panel panel-default tabs">                            
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Symptoms</a></li>
+					<li><a href="#tab-second" role="tab" data-toggle="tab">Treatment</a></li>
+					<li><a href="#tab-third" role="tab" data-toggle="tab">Payment</a></li>
+				</ul>
+				<div class="panel-body tab-content">
+
+		<div class="tab-pane active" id="tab-first">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="text" ng-model="symptoms.complaint" class="form-control" name="name"/>
+					</div>
+					<div class="col-md-3">
+						<select id="selectedChange" class="tokenizationSelect2 form-control" ng-model="symptoms.change" ng-options="change.name for change in changes">
+						</select>
+					</div>
+					<ul class="panel-controls">
+						<li class="xn-icon-button">
+							<a href="#" ng-click="addSymptom()" rel="tooltip" title="Add Symptom">
+								<span class="fa fa-plus"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Complaints</th>
+						<th>Changes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="symptom in symptoms">
+						<td>{{symptom.complaint}}</td>
+						<td>
+							<span class={{symptom.icon}}></span>
+							  {{symptom.change}}
+						</td>
+					</tr>
+				</tbody>
+			</table>				
+		</div>
+					
+		<div class="tab-pane" id="tab-second">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">
+										<select ng-model="treatments.medicine" class="form-control customMedicine">
+											<option ng-repeat="med in medicines">{{med}}</option>
+										</select>
+					</div>
+					<div class="col-md-3">
+										<select ng-model="treatments.potency" class="form-control select">
+											<option ng-repeat="pot in potencies">{{pot}}</option>
+										</select>
+					</div>
+					<div class="col-md-2">
+										<select ng-model="treatments.dose" class="form-control select">
+											<option ng-repeat="dose in doses">{{dose}}</option>
+										</select>
+					</div>
+					<div class="col-md-3">
+										<select ng-model="treatments.frequency" class="form-control select">
+											<option ng-repeat="fre in frequencies">{{fre}}</option>
+										</select>
+					</div>						
+					<ul class="panel-controls">
+						<li class="xn-icon-button">
+							<a href="#" ng-click="addTreatment()" rel="tooltip" title="Add Treatment">
+								<span class="fa fa-plus"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Medicine</th>
+						<th>Potency</th>
+						<th>Dose</th>
+						<th>Frequency</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="treatment in treatments">
+						<td>{{treatment.medicine}}</td>
+						<td>{{treatment.potency}}</td>
+						<td>{{treatment.dose}}</td>
+						<td>{{treatment.frequency}}</td>
+					</tr>
+				</tbody>
+			</table>				
+		</div>
+		
+					<div class="tab-pane" id="tab-third">
+						<form name="paymentForm" role="form" class="form-horizontal" novalidate>
+							<div class="form-group" ng-class="{'has-error' : paymentForm.billRaised.$invalid}">
+								<label class="col-md-3 control-label">Bill Raised:</label>
+								<div class="col-md-3">
+									<input type="text" class="form-control" ng-model="billRaised" name="billRaised" ng-pattern="/^[0-9]+$/"/>
+									<p ng-show="paymentForm.billRaised.$invalid" class="help-block">Enter valid Amount</p>
+								</div>
+							</div>
+							<div class="form-group" ng-class="{'has-error' : paymentForm.billPaid.$invalid}">
+								<label class="col-md-3 control-label">Bill Paid:</label>
+								<div class="col-md-3">
+									<input type="text" class="form-control" ng-model="billPaid" name="billPaid" ng-pattern="/^[0-9]+$/"/>
+									<p ng-show="paymentForm.billPaid.$invalid" class="help-block">Enter valid Amount</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">Medium:</label>
+								<div class="col-md-3">
+									<select class="form-control" ng-model="medium">
+										<option ng-repeat="med in mediums">{{med}}</option>
+									</select>
+								</div>
+							</div>
+							<!--div class="form-group">
+								<label class="col-md-3 control-label">Bill Unpaid:</label>
+								<div class="col-md-3">
+									<input type="text" class="form-control" ng-disabled="true" ng-model="billUnpaid" name="billUnpaid"/>
+								</div>
+							</div-->
+						</form>
+					</div>
+
+		
+		
+		
+		
+		
+		
+					
+				</div>		
+			</div>
+		</form>
+	</div>
+	<div class="panel-body clearfix">
+		<button class="btn btn-default pull-right" ng-disabled="!(symptoms.length > 0 || treatments.length > 0)" ng-click="ok()">Save</button>
+	</div>		
+	</div> <!-- End of panel -->
+</div>
+<script src="js/controllers/followup-script.js"></script>
+</script>

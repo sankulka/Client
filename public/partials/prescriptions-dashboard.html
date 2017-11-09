@@ -1,0 +1,44 @@
+<!--
+This is the script for Patients dashboard
+-->
+<div id="prescriptions-dashboard-controller" class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">                                
+			<div class="row">
+				<h3 class="panel-title"><span class="fa fa-medkit"/> Prescriptions</h3>
+				<div class="pull-right">
+					<input type="search" class="form-control " placeholder="Search" ng-model="vm.query">
+				</div>			
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Name</th>
+						<th>Prescriptions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="prescription in (vm.prescriptions | filter: vm.search).slice(((vm.currentPatientPage-1)*vm.itemsPerPage), ((vm.currentPatientPage)*vm.itemsPerPage))">
+						<td>{{prescription.dateTime}}</td>
+						<td>{{prescription.name}}</td>
+						<td>
+							<table class="table">
+								<tbody>
+									<tr ng-repeat="treatment in prescription.treatments">
+										<td>{{treatment.medicine}}; {{treatment.potency}}; {{treatment.dose}}; {{treatment.frequency}}</td>
+									</tr>
+								<tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pull-right">
+				<ul uib-pagination class="pagination" previous-text="&lsaquo;" next-text="&rsaquo;" total-items="vm.prescriptions.length" ng-model="vm.currentPatientPage" max-size="vm.maxSize" ng-change="vm.patientPageChanged()" items-per-page="vm.itemsPerPage"></ul>
+			</div>
+		</div>
+	</div>
+</div>

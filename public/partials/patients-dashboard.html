@@ -1,0 +1,54 @@
+
+<div ng-include="'./partials/patient-update.html'" />
+
+<!--
+This is the script for Patients dashboard
+-->
+<div id="patients-dashboard-controller" class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">                                
+			<div class="row">
+				<h3 class="panel-title"><span class="fa fa-user"/> Chronic Cases</h3>
+				<ul class="panel-controls">
+					<li>
+						<a href="#" ng-click="createPatient()" ng-if="vm.user != ''" rel="tooltip" title="Add New Patient" data-placement="bottom">
+							<span class="fa fa-plus"></span>
+						</a>
+					</li>
+				</ul>					
+				<div class="pull-right">
+					<input type="search" class="form-control " placeholder="Search" ng-model="vm.query">
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Reference</th>
+						<th>Primary Complaints</th>
+						<th>Secondary Complaints</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="patient in (vm.patients | filter: vm.search).slice(((vm.currentPatientPage-1)*vm.itemsPerPage), ((vm.currentPatientPage)*vm.itemsPerPage))">
+						<td>{{patient.regId}}</td>
+						<!--td>{{patient.date}}</td-->
+						<td><a href="#!/patient/{{patient.regId}}">{{patient.name}}</td>
+						<td>{{patient.phone}}</td>
+						<td>{{patient.reference}}</td>
+						<td>{{patient.complaints.primaryCom}}</td>
+						<td>{{patient.complaints.secondaryCom}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pull-right">
+				<p>Count: {{(vm.patients | filter: vm.search).length}}</p>	
+				<ul uib-pagination class="pagination" previous-text="&lsaquo;" next-text="&rsaquo;" total-items="vm.patients.length" ng-model="vm.currentPatientPage" max-size="vm.maxSize" ng-change="vm.patientPageChanged()" items-per-page="vm.itemsPerPage"></ul>
+			</div>
+		</div>
+	</div>
+</div>

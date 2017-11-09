@@ -1,0 +1,32 @@
+<div id="links">
+    <a href="images/files/Panacea.jpg">	
+    </a>
+    <a href="images/files/PanaceaGeneral.png">
+    </a>
+    <a href="images/files/PanaceaChildren.jpg">	
+    </a>
+    <a href="images/files/Children.jpg">	
+    </a>
+</div>
+<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+<div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
+    <div class="slides"></div>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+
+<script type="text/javascript" src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+<script>
+blueimp.Gallery(
+    document.getElementById('links').getElementsByTagName('a'),
+    {
+        container: '#blueimp-gallery-carousel',
+        carousel: true,
+		stretchImages: true,
+		slideshowInterval: 12000,
+		transitionSpeed: 800
+    }
+);
+</script>

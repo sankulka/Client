@@ -1,0 +1,26 @@
+<div ng-include="'./partials/appointment.html'" />
+
+<div class="panel panel-default">
+	<div class="panel-heading">                                
+		<div class="row">
+			<h3 class="panel-title"><span class="fa fa-calendar"/> Calendar</h3>
+		</div>
+	</div>
+	<div class="panel-body">
+		<div id="calendar-controller">
+			<div ng-show="vm.user == ''">
+			<div class="calendar">
+				<div id="calendar"></div>
+			</div>
+			</div>
+			<div ng-hide="vm.user == ''">
+			<div class="calendar">
+				<div id="calendarLoggedIn"></div>                            
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--script type="text/javascript" src="js/plugins/fullcalendar/fullcalendar.min.js"></script-->
+<script src="js/controllers/calendar-script.js"></script>

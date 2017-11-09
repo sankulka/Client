@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+	<div class="panel-heading">                                
+		<div class="row">
+			<h3 class="panel-title"><span class="fa fa-image"/> Gallery</h3>
+			<div class="pull-right">
+				<ul class="panel-controls">
+					<li class="xn-icon-button" ng-show="vm.role == 'owner'">
+						<a href="#" type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="" ngf-max-size="5MB" rel="tooltip" title="Upload Image" data-placement="bottom">
+							<span class="fa fa-plus"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<!-- START CONTENT FRAME BODY -->
+
+	<div class="gallery" id="links">
+		<ul class="gallery-item" ng-repeat="file in vm.gallery">
+			<a href="{{vm.path + file}}" data-gallery/>
+			<div class="image">
+				<img src="{{vm.path + file}}"/>      
+				<ul class="gallery-item-controls" ng-show="vm.role == 'owner'">
+					<li><span class="gallery-item-remove" ng-click="deleteGalleryFile(file)"><i class="fa fa-times"></i></span></li>
+				</ul>
+			</div>
+		</ul>
+	</div>	
+</div>
+
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+	<div class="slides"></div>
+	<h3 class="title"></h3>
+	<a class="prev">‹</a>
+	<a class="next">›</a>
+	<a class="close">×</a>
+	<a class="play-pause"></a>
+	<ol class="indicator"></ol>
+</div>
+
+<script type="text/javascript" src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+<script>            
+	document.getElementById('links').onclick = function (event) {
+		event = event || window.event;
+		var target = event.target || event.srcElement;
+		var link = target.src ? target.parentNode : target;
+		var options = {index: link, event: event,onclosed: function(){
+				setTimeout(function(){
+					$("body").css("overflow","");
+				},200);                        
+			}};
+		var links = this.getElementsByTagName('a');
+		blueimp.Gallery(links, options);
+	};
+</script>

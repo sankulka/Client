@@ -1,0 +1,164 @@
+<div><p/></div>
+
+<div class="row">
+
+	<div class="col-md-4">
+		<div class="widget widget-default widget-item-icon">
+			<div class="widget-item-left">
+				<span class="fa fa-user"></span>
+			</div>
+			<div class="widget-data">
+				<div class="widget-int num-count">{{vm.patients.length}}</div>
+				<div class="widget-title">Registred Patients</div>
+			</div>                  
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="widget widget-default widget-item-icon">
+			<div class="widget-item-left">
+				<span class="fa fa-calendar"></span>
+			</div>
+			<div class="widget-data">
+				<div class="widget-int num-count">{{(vm.patientAppts | filter: vm.searchAppts).length}}</div>
+				<div class="widget-title">Appointments Scheduled</div>
+			</div>                  
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="widget widget-default widget-item-icon">
+			<div class="widget-item-left">
+				<span class="fa fa-envelope"></span>
+			</div>                             
+			<div class="widget-data">
+				<div class="widget-int num-count">{{vm.emails.length}}</div>
+				<div class="widget-title">New Emails</div>
+			</div>                  
+		</div>
+	</div>
+</div>
+	
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">                                
+				<!--div class="row">
+					<h3 class="panel-title">Patients</h3>
+				    <div class="pull-right">
+						<input type="search" class="form-control " placeholder="Search" ng-model="vm.query">
+					</div>				
+				</div-->
+
+				<h3 class="panel-title">Patients</h3>
+                <ul class="panel-controls">
+					<input type="search" class="form-control " placeholder="Search" ng-model="vm.query">
+					<!--li><a href="#" ng-click="vm.createPatient()"><span class="fa fa-plus"></span></a></li-->
+				</ul>
+
+
+
+
+				
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Phone</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="patient in (vm.patients | filter: vm.search).slice(((vm.currentPatientPage-1)*vm.itemsPerPage), ((vm.currentPatientPage)*vm.itemsPerPage))">
+							<td>{{patient.regId}}</td>
+							<!--td>{{patient.date}}</td-->
+							<td><a href="#!/patient/{{patient.regId}}">{{patient.name}}</a></td>
+							<td>{{patient.phone}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="pull-right">
+					<!--p>Count: {{(vm.patients | filter: vm.search).length}}</p-->	
+					<ul uib-pagination class="pagination" previous-text="&lsaquo;" next-text="&rsaquo;" total-items="vm.patients.length" ng-model="vm.currentPatientPage" max-size="vm.maxSize" ng-change="vm.patientPageChanged()" items-per-page="vm.itemsPerPage"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="row">
+					<h3 class="panel-title">Appointments</h3>
+				    <div class="pull-right">
+						<select class="form-control" ng-model="vm.apptQuery" ng-change="vm.apptOptionChanged()">
+							<option ng-repeat="appt in vm.apptQueries">{{appt}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Start Time</th>
+							<th>Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="patientAppt in (vm.patientAppts | filter: vm.searchAppts).slice(((vm.currentAppointmentPage-1)*vm.itemsPerPage), ((vm.currentAppointmentPage)*vm.itemsPerPage))">
+							<td>{{patientAppt.startDateTime}}</td>
+							<td>
+								<div ng-if="patientAppt.regId == ''">
+								{{patientAppt.name}}
+								</div>
+								<div ng-if="patientAppt.regId != ''">
+								<a href="#!/patient/{{patientAppt.regId}}">{{patientAppt.name}}</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="pull-right">
+					<!--p>Count: {{vm.patientAppts.length}}</p-->	
+					<ul uib-pagination class="pagination" previous-text="&lsaquo;" next-text="&rsaquo;" total-items="(vm.patientAppts | filter: vm.searchAppts).length" ng-model="vm.currentAppointmentPage" max-size="vm.maxSize" ng-change="vm.appointmentPageChanged()" items-per-page="vm.itemsPerPage"></ul>
+				</div>
+			</div>
+		</div>	
+	</div>
+	
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="row">
+					<h3 class="panel-title">Unread Emails</h3>
+				    <div class="pull-right">
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">			
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Name</th>
+							<th>Subject</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="email in (vm.emails | orderBy : vm.emailDate : true).slice(((vm.currentEmailPage-1)*vm.itemsPerPage), ((vm.currentEmailPage)*vm.itemsPerPage))">
+							<td>{{email.dateTime}}</td>
+							<td><a href="#!/patient/{{email.id}}">{{email.name}}</td>
+							<td> <div class="truncate-ellipsis"><span>{{email.subject}} </span></div> </td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="pull-right">
+					<ul uib-pagination class="pagination" previous-text="&lsaquo;" next-text="&rsaquo;" total-items="vm.emails.length" ng-model="vm.currentEmailPage" max-size="vm.maxSize" ng-change="vm.emailPageChanged()" items-per-page="vm.itemsPerPage"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,78 @@
+
+<div ng-include="'./partials/acute-followup.html'" />
+
+<!--
+This is the script for Patients dashboard
+-->
+<div id="acute-dashboard-controller" class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">                                
+			<div class="row">
+				<h3 class="panel-title"><span class="fa fa-user"/> Acute Cases</h3>
+				<ul class="panel-controls">
+					<li>
+						<a class="disabled" ng-if="vm.selectedPatient == null">
+							<span class="fa fa-pencil"></span>
+						</a>
+						<a href="#" ng-click="updateFollowup(vm.selectedPatient)" ng-if="vm.selectedPatient != null" rel="tooltip" title="Edit Acute Case" data-placement="bottom">
+							<span class="fa fa-pencil"></span>
+						</a>
+						<a href="#" ng-click="createFollowup()" ng-if="vm.user != ''" rel="tooltip" title="Add Acute Case" data-placement="bottom">
+							<span class="fa fa-plus"></span>
+						</a>
+					</li>
+				</ul>					
+				<div class="pull-right">
+					<input type="search" class="form-control " placeholder="Search" ng-model="vm.query">
+				</div>
+			</div>				
+		</div>
+		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Followup</th>
+						<th>Notes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="patient in (vm.patients | filter: vm.search).slice(((vm.currentPatientPage-1)*vm.itemsPerPage), ((vm.currentPatientPage)*vm.itemsPerPage))" ng-class="{'selected': patient.selected}" ng-click="selectPatient(patient)" ng-dblclick="updateFollowup(patient)">
+						<td>{{patient.dateTime}}</td>
+						<td>{{patient.name}}</td>
+						<td>{{patient.phone}}</td>
+						<td>
+							<div class="row">
+								<div class="col-md-5">
+									<table class="table">
+										<tbody>
+											<tr ng-repeat="symptom in patient.followup.symptoms">
+												<td><span class={{symptom.icon}}></span>   {{symptom.change}} : {{symptom.complaint}}</td>
+											</tr>
+										<tbody>
+									</table>
+								</div>
+								<div class="col-md-5">
+									<table class="table">
+										<tbody>
+											<tr ng-repeat="treatment in patient.followup.treatments">
+												<td>{{treatment.medicine}}; {{treatment.potency}}; {{treatment.dose}}; {{treatment.frequency}}</td>
+											</tr>
+										<tbody>
+									</table>
+								</div>
+							</div>						
+						</td>
+						<td>{{patient.notes}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pull-right">
+				<p>Count: {{(vm.patients | filter: vm.search).length}}</p>	
+				<ul uib-pagination class="pagination" previous-text="&lsaquo;" next-text="&rsaquo;" total-items="vm.patients.length" ng-model="vm.currentPatientPage" max-size="vm.maxSize" ng-change="vm.patientPageChanged()" items-per-page="vm.itemsPerPage"></ul>
+			</div>
+		</div>
+	</div>
+</div>

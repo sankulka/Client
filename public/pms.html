@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <title>NuHomoeo - Homoeopathic Patient Management System</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=11" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+		<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
+    </head>
+
+    <body ng-app="PMS">
+        <div class="page-container page-navigation-top-fixed" ng-controller="PMSController as vm">
+
+            <div class="page-content">		
+			
+                <ul class="x-navigation x-navigation-horizontal">
+                    <li class="xn-logo">
+						<a href="#!/dashboard">NuHomoeo</a>
+                        <!--a href="#!/dashboard" ng-click="pmsDashboard()">NuHomoeo2</a-->
+                        <a href="#" class="x-navigation-control"></a>
+                    </li>
+                    <!--li>
+                        <a href="#!/dashboard" ng-click="pmsDashboard()">
+						<span class="fa fa-desktop"></span>
+						<span class="xn-text">Dashboard</span>
+						</a>                        
+                    </li-->
+
+                    <!--li class="xn-openable">
+                        <a href="#"><span class="fa fa-user"></span> <span class="xn-text">Patients</span></a>
+                        <ul>
+						</ul>
+					</li-->
+					<li>
+						<a href="#!/patients" ng-click="chronicDashboard()">
+						<span class="fa fa-user"></span>
+						<span class="xn-text">Chronic Cases</span>
+						</a>   
+					</li>
+					<li>
+						<a href="#!/acute" ng-click="acuteDashboard()">
+						<span class="fa fa-user"></span>
+						<span class="xn-text">Acute Cases</span>
+						</a>
+					</li>
+                    <li>
+                        <a href="#!/prescriptions" ng-click="prescriptionsDashboard()">
+						<span class="fa fa-medkit"></span>
+						<span class="xn-text">Prescriptions</span>
+						</a>
+                    </li>
+                    <li>
+                        <a href="#!/payments" ng-click="paymentsDashboard()">
+						<span class="fa fa-rupee"></span>
+						<span class="xn-text">Payments</span>
+						</a>
+                    </li>
+                    <!--li>
+                        <a href="#!/testimonials" ng-click="testimonials()">
+						<span class="fa fa-star"></span>
+						<span class="xn-text">Testimonials</span>
+						</a>                        
+                    </li>
+                    <li>
+                        <a href="#/gallery" ng-click="gallery()">
+						<span class="fa fa-picture-o"></span>
+						<span class="xn-text">Gallery</span>
+						</a>                        
+                    </li-->					
+                    <li>
+                        <a href="#!/calendar" ng-click="calendar()">
+						<span class="fa fa-calendar"></span>
+						<span class="xn-text">Calendar</span>
+						</a>                        
+                    </li>
+                    <li class="xn-search">
+                        <form role="form" ng-submit="search()">
+                            <input type="text" ng-model="vm.query" name="search" placeholder="Search..."/>
+                        </form>
+                    </li>  					
+					
+                    <li class="pull-right">
+						<a href="/" ng-click="logout()">
+						<span class="fa fa-sign-out"></span>
+						<span class="xn-text">Logout</span>
+						</a>                        
+					</li>
+                </ul>
+				<div class="page-content-wrap">                
+					<div ui-view></div>
+                </div>
+            </div>            
+        </div>	
+		
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>   
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>  
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.0/ui-bootstrap-tpls.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-idle/1.3.1/angular-idle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-cookies.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+		<script src="js/controllers/patient-update-controller.js"></script>
+		<script src="js/controllers/notes-controller.js"></script>
+		<script src="js/controllers/acute-followup-controller.js"></script>
+		<script src="js/controllers/patient-followup-controller.js"></script>
+		<script src="js/controllers/patient-dashboard-controller.js"></script>
+		<script src="js/controllers/patients-dashboard-controller.js"></script>
+		<script src="js/controllers/acute-dashboard-controller.js"></script>
+		<script src="js/controllers/utils-module.js"></script>
+		<script src="js/controllers/pms-module.js"></script>
+		<script src="js/controllers/pms-controller.js"></script>
+		<script src="js/controllers/pms-dashboard-controller.js"></script>
+		<script src="js/controllers/web-testimonials-controller.js"></script>
+		<script src="js/controllers/web-gallery-controller.js"></script>
+		<script src="js/controllers/appointment-controller.js"></script>
+		<script src="js/controllers/payment-controller.js"></script>
+		<script src="js/controllers/payments-dashboard-controller.js"></script>
+		<script src="js/controllers/prescriptions-dashboard-controller.js"></script>
+		<script src="js/controllers/calendar-controller.js"></script>
+		<script src="js/services/pms-router.js"></script>
+		<script src="js/services/pms-roles-service.js"></script>
+		<script src="js/services/pms-api-interceptor.js"></script>
+		<script src="js/services/pms-utils-service.js"></script>
+		<script src="js/services/patient-create-service.js"></script>
+    </body>
+</html>
+
+<script>
+$(document).ready(function(){
+    $('.xn-openable > ul > li').click(function(){
+        $(this.parentNode.parentNode).click();
+    });
+
+        $('.x-navigation > li').click(function() {
+        var contr = $(this.parentNode).find('.x-navigation-control');
+        contr.click();
+        });
+});
+</script>

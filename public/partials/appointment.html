@@ -1,0 +1,78 @@
+<script type="text/ng-template" id="appointment.html">
+<div class="panel panel-default">
+	<div class="panel-body">
+		<h3 class="panel-title" id="modal-title">Request Appointment</h3>
+	</div>
+	<div class="panel-body" id="modal-body">
+		<form name="appointmentForm" role="form" class="form-horizontal" novalidate>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Date:</label>  
+				<div class="col-md-3">
+					<input type="text" id="date" ng-model="date" ng-disabled="true" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Time:</label>
+				<div class="col-md-3">
+					<input type="text" id="time" ng-model="time" ng-disabled="true" class="form-control"/>
+				</div>
+				<div class="col-md-2">
+					<select id="duration" ng-model="duration" ng-disabled="isLoggedIn == false || event != null" ng-options="duration for duration in durations" class="form-control select">
+					</select>
+				</div>
+				<label class="control-label">Mins</label> 
+			</div>
+			<div class="form-group">
+				<div ng-show="registered == true">
+					<label class="col-md-3 control-label">Patient:</label>
+					<div class="col-md-5">
+						<select id="selectedPatient" class="tokenizationSelect2 form-control" ng-model="selectedPatient" name="selectedPatient" ng-options="patient.regId for patient in patients track by patient.regId">
+						</select>
+					</div>
+				</div>
+				<div ng-show="registered == false" ng-class="{'has-error' : appointmentForm.newPatient.$invalid && !appointmentForm.newPatient.$pristine}">
+					<label class="col-md-3 control-label">Name:</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="newPatient" ng-model="newPatient" name="newPatient" ng-disabled="event != null" required/>
+						<p ng-show="appointmentForm.newPatient.$invalid && !appointmentForm.newPatient.$pristine" class="help-block">Enter Patient name</p>
+					</div>
+				</div>
+				<div ng-show="isLoggedIn == true && event == null">
+					<label class="control-label"><input type="checkbox" id="registered" ng-model="registered" class="icheckbox"/> Registered</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div ng-show="registered == false" ng-class="{'has-error' : appointmentForm.phone.$invalid && !appointmentForm.phone.$pristine}">
+					<label class="col-md-3 control-label">Phone:</label>          
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="phone" ng-model="phone" name="phone" ng-pattern="/^[0-9]+$/" ng-disabled="event != null"  required/>
+						<p ng-show="appointmentForm.phone.$invalid && !appointmentForm.phone.$pristine" class="help-block">Enter valid phone number</p>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div ng-show="registered == false" ng-class="{'has-error' : appointmentForm.email.$invalid && !appointmentForm.email.$pristine}">
+					<label class="col-md-3 control-label">E-mail:</label>
+					<div class="col-md-5">
+						<input type="email" id="email" class="form-control" ng-model="email" name="email" ng-disabled="event != null" />
+						<p ng-show="appointmentForm.email.$invalid && !appointmentForm.email.$pristine" class="help-block">Enter valid Email address</p>
+					</div>
+				</div>
+			</div>
+		</form>
+		<p/>
+		<div ng-if="registered == true">
+			<button class="btn btn-default pull-right" ng-click="createAppointment()" ng-disabled="selectedPatient == null || selectedPatient == undefined">Submit</button>
+		</div>
+		<div ng-if="registered == false && event == null">
+			<button class="btn btn-default pull-right" ng-click="createAppointment()" ng-disabled="appointmentForm.newPatient.$invalid || appointmentForm.phone.$invalid || appointmentForm.email.$invalid">Submit
+			</button>
+		</div>
+		<div class="row" ng-if="event != null">
+			<button class="btn btn-default pull-left" ng-click="deleteAppointment()"> Delete</button>
+			<button class="btn btn-default pull-right" ng-click="sendSMSReminder()"> SMS Reminder</button>
+		</div>
+	</div>
+</div>
+</script>

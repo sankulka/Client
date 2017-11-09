@@ -1,0 +1,211 @@
+<!--
+/////
+THIS IS MODAL FORM FOR PATIENT CREATE/UPDATE
+/////
+-->
+
+<div ng-include="'./partials/patient-update.html'" />
+<div ng-include="'./partials/patient-notes.html'" />
+<div ng-include="'./partials/patient-followup.html'" />
+
+<!--
+
+THIS IS PATIENT DASHBOARD CONTROLLER FORM
+
+-->
+<div><p/></div>
+<div id="patient-dashboard-controller" class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" ng-if="vm.id != null"><span class="fa fa-user"/> {{vm.salutation}} {{vm.name}}</h3>
+                <ul class="panel-controls">
+					<li class="xn-icon-button">
+						<a href="#" ng-click="updatePatient()" ng-show="vm.id != null" rel="tooltip" title="Update Patient" data-placement="bottom">
+							<span class="fa fa-pencil"></span>
+						</a>
+					</li>
+					<li class="xn-icon-button">
+						<a href="#" ng-click="createPatient()" ng-if="vm.user != ''" rel="tooltip" title="Add New Patient" data-placement="bottom">
+							<span class="fa fa-plus"></span>
+						</a>
+					</li>					
+				</ul>
+			</div>
+
+			<div class="panel-body list-group border-bottom" ng-show="vm.id != null">
+				<a class="row list-group-item">
+					<div class="pull-left">ID: {{vm.id}}</div>
+					<div class="pull-right">Ref: {{vm.reference}}</div>
+				</a>
+				<a class="row list-group-item">
+					<div class="pull-left">DOB: {{vm.dob}}</div>
+					<div class="pull-right">{{vm.gender}}</div>
+				</a>
+				<a class="row list-group-item">
+					<div class="pull-left">Ph: {{vm.phone}}</div>
+					<div class="pull-right">{{vm.email}}</div>
+				</a>
+				<div ng-if="vm.secondaryCom == ''">
+					<a class="list-group-item">{{vm.primaryCom}}</a>
+				</div>
+				<div ng-if="vm.secondaryCom != ''">
+					<a class="list-group-item">{{vm.primaryCom}}, {{vm.secondaryCom}}</a>
+				</div>
+				<a class="list-group-item">{{vm.address}}</a>
+			</div>
+		</div>
+		
+		<div class="panel panel-default animated zoomIn xn-drop-left xn-panel-dragging">
+            <div class="panel-heading">
+				<h3 class="panel-title"><span class="fa fa-image"/> Gallery</h3>
+                <ul class="panel-controls" ng-if="vm.id != null">	
+					<li class="xn-icon-button">
+						<a href="#" type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="" ngf-max-size="5MB" rel="tooltip" title="Upload Image" data-placement="bottom">
+							<span class="fa fa-plus"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+            <div class="panel-body">
+				<div class="gallery" id="links">
+					<iframe src="{{vm.filesFolder | trustAsResourceUrl}}" style="width:100%; height:400px; border:0;"></iframe>
+				</div>
+			</div>
+
+            <!--div class="panel-body">
+				<div class="gallery" id="links">
+					<div ng-repeat="activity in vm.activities">
+						<a class="gallery-item" href="{{activity[4]}}" target="_blank" data-gallery ng-if="activity[1] == 'image/jpeg' || activity[1] == 'image/gif' || activity[1] == 'image/png' || activity[1] == 'application/pdf' || activity[1] == 'application/octet-stream' || activity[1] == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+							<div class="image">
+								<!--img src="{{activity[4]}}" type="{{activity[1]}}"/-->
+								<!--img src="{{activity[5]}}" type="{{activity[1]}}"/-->
+								<!--img src="{{activity[4]}}" type="{{activity[1]}}" data-target="thumbnail"/-->
+								<!--img src="https://drive.google.com/thumbnail?authuser='me'&sz=w320&id=0BxI-08mYaSCvTUZqd1hRT0Z3eG8" type="{{activity[1]}}>
+								<!--object data="" type="image/jpg"></object-->
+								<!--ul class="gallery-item-controls">
+									<li><span class="gallery-item-remove"><i class="fa fa-times"></i></span></li>
+								</ul-->
+							<!--/div>
+						</a>
+					</div>
+				</div>
+			</div-->
+		</div>
+	</div>
+						
+	<div class="col-md-8">
+	<!-- START Table for Activities -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><span class="fa fa-clock-o"/> Activities</h3>
+                <ul class="panel-controls" ng-if="vm.disableTestimonial == true">
+					<li><a href="#" ng-click="startCaseHistory()" ng-show="vm.id != null" rel="tooltip" title="Add Case History" data-placement="bottom"><span class="fa fa-files-o"></span></a></li>
+					<li><a href="#" ng-click="addFollowup()" ng-show="vm.id != null" rel="tooltip" title="Add Followup" data-placement="bottom"><span class="fa fa-stethoscope"></span></a></li>
+					<li><a href="#" ng-click="addNotes()" ng-show="vm.id != null" rel="tooltip" title="Add Note" data-placement="bottom"><span class="fa fa-comment-o"></span></a></li>
+					<li><a href="#" ng-if="(vm.id != null && vm.disableTestimonial == true)" class="disabled"><span class="fa fa-star-o"></span></a></li>
+				</ul>
+                <ul class="panel-controls" ng-if="vm.disableTestimonial == false">
+					<li><a href="#" ng-click="startCaseHistory()" ng-show="vm.id != null" class="disabled"><span class="fa fa-files-o"></span></a></li>
+					<li><a href="#" ng-click="addFollowup()" ng-show="vm.id != null" class="disabled"><span class="fa fa-stethoscope"></span></a></li>
+					<li><a href="#" ng-click="addNotes()" ng-show="vm.id != null" class="disabled"><span class="fa fa-comment-o"></span></a></li>
+					<li><a href="#" ng-if="(vm.id != null && vm.disableTestimonial == false)" ng-click="createTestimonial()" rel="tooltip" title="Create Testimonial" data-placement="bottom"><span class="fa fa-star-o"></span></a></li>
+				</ul>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th></th>
+							<th>Details</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="activity in vm.activities" ng-class="{'selected': activity.selected}" ng-click="selectActivity(activity)">
+							<td>{{activity[0]}}</td>
+							<td>
+								<div ng-if="activity[1] == 'Notes'">
+									<span class="fa fa-comment-o"></span>
+								</div>
+								<div ng-if="activity[1] == 'Email'">
+									<span class="fa fa-envelope-o"></span>
+								</div>
+								<div ng-if="activity[1] == 'CaseHistory'">
+									<span class="fa fa-files-o"></span>
+								</div>	
+								<div ng-if="activity[1] == 'Followup'">
+									<span class="fa fa-stethoscope"></span>
+								</div>
+								<div ng-if="activity[1] == 'image/jpeg' || activity[1] == 'image/gif' || activity[1] == 'image/png' || activity[1] == 'application/pdf' || activity[1] == 'application/octet-stream' || activity[1] == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || activity[1] == 'application/vnd.ms-excel'">
+									<span class="fa fa-picture-o"></span>
+								</div>
+							</td>
+							<td>
+								<div ng-if="activity[1] == 'Notes'">
+									<p>{{activity[2]}}</p>
+								</div>
+								<div ng-if="activity[1] == 'Email'">
+									<a ng-href="{{activity[4]}}" target="_blank">{{activity[2]}}</a>
+								</div>
+								<div ng-if="activity[1] == 'CaseHistory'">
+									<a ng-href="{{activity[4]}}" target="_blank">{{activity[2]}}</a>
+								</div>
+								<div ng-if="activity[1] == 'Followup'">
+									<div class="row">
+										<div class="col-md-5">
+											<table class="table">
+												<tbody>
+													<tr ng-repeat="symptom in activity[2].symptoms">
+														<td><span class={{symptom.icon}}></span>   {{symptom.change}} : {{symptom.complaint}}</td>
+													</tr>
+												<tbody>
+											</table>
+										</div>
+										<div class="col-md-5">
+											<table class="table">
+												<tbody>
+													<tr ng-repeat="treatment in activity[2].treatments">
+														<td>{{treatment.medicine}}; {{treatment.potency}}; {{treatment.dose}}; {{treatment.frequency}}</td>
+													</tr>
+												<tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div ng-if="activity[1] == 'image/jpeg' || activity[1] == 'image/gif' || activity[1] == 'image/png' ||  activity[1] == 'application/pdf' || activity[1] == 'application/octet-stream' || activity[1] == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || activity[1] == 'application/vnd.ms-excel'">
+									<a ng-href="{{activity[4]}}" target="_blank">{{activity[2]}}</a>		
+								</div>													
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>					
+	<!-- END Table for Activities -->
+	</div>
+</div>
+        
+<script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type='text/javascript' src='js/plugins/jquery-validation/jquery.validate.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
+<script type="text/javascript" src="js/plugins.js"></script>
+
+<script type="text/javascript">
+	$("#patientForm").validate({
+		rules: {                                            
+			name: {
+				required: true,
+				minlength: 2
+			},
+			phone: {
+				required: true,
+				minlength: 8,
+				maxlength: 10
+			},
+			'gender': {
+				required: true
+			}
+		}
+	});
+</script>
