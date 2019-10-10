@@ -70,7 +70,10 @@ pms.service('PMSUtilsService', function() {
 		'Every hour',
 		'Every two hours',
 		'Every three hours',
-		'Every four hours'
+		'Every four hours',
+		'Once a Week',
+		'Twice a Week',
+		'SOS'
 	];
 	
 	this.getFrequencies = function () {
@@ -85,7 +88,8 @@ pms.service('PMSUtilsService', function() {
 		'1 Drop',
 		'2 Drops',
 		'3 Drops',
-		'4 Drops'
+		'4 Drops',
+		'Local Application'
 	];
 	
 	this.getDoses = function () {
